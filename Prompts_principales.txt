@@ -1,0 +1,23 @@
+------------ Prompts principales utilizados en la implementación del ETL ------------
+
+--- 1. Perfilamiento de datos:
+Actúa como un experto en ingeniería de datos para un proyecto de Inteligencia de Negocios en el TEC. Necesito limpiar el dataset retail_store_sales.csv para un proceso ETL que terminará en BigQuery. 
+El archivo original está 'sucio' y presenta múltiples problemas de calidad. 
+Basado en mi perfilamiento previo, aplica estrictamente las siguientes reglas de transformación: 
+1. Fechas: Convierte la columna Transaction Date de texto a un formato 
+de fecha estándar YYYY-MM-DD
+2. Manejo de Nulos: En las columnas Item y Discount Applied, rellena los vacíos con el texto 'Desconocido'. 
+Para las columnas numéricas Price, Quantity y Total, rellena los nulos con 'Null' o 0 para mantener la integridad del cálculo
+3. Normalización de IDs: Asegúrate de que los Customer ID sigan un formato consistente (CUST_) y elimina registros duplicados basados en el Transaction ID 
+y Limpieza de Texto: Elimina espacios en blanco extra en todos los 
+campos de texto. 
+Por favor, dime cómo ejecutar estos pasos específicamente en la herramienta Wrangler de Cloud Data Fusion para que mi pipeline sea reproducible. El objetivo es que los datos lleguen limpios a la capa analítica en la nube. 
+
+--- 2. Configuración de stack
+Actúa como arquitecto de soluciones en Google Cloud. Necesito configurar un entorno donde Cloud Data Fusion extraiga datos de Cloud Storage y los cargue en BigQuery. Explícame qué permisos de IAM son indispensables para que la cuenta de servicio de cómputo pueda crear un clúster de Dataproc eficientemente y cómo debo configurar el sink de BigQuery para que reconozca el esquema de mi dataset retail_store_sales.
+
+--- 3. Limpieza y transformación
+Utilizando la herramienta Wrangler en Cloud Data Fusion, genera las reglas de transformación necesarias para limpiar mi dataset. Necesito los pasos exactos para: Cambiar el tipo de dato de 'String' a 'Integer/Float' en columnas de montos, aplicar una directiva de 'Fill Nulls' con valores personalizados, usar 'Parse as Date' para estandarizar el tiempo, dame las instrucciones en el formato que Wrangler acepta para copiarlas directamente en la consola de transformaciones.
+
+--- 4. Depuración de errores
+Estoy recibiendo un error 400 Dataproc cluster create operation failed al intentar ejecutar mi pipeline. El mensaje indica que la cuenta de servicio ...compute@developer.gserviceaccount.com no tiene el rol de Dataproc Worker y que mi usuario no está autorizado para actuar como cuenta de servicio. ¿Cuáles son los comandos de gcloud o los pasos en la consola de IAM para corregir estos permisos y permitir que el pipeline pase de 'Provisioning' a 'Running'?"
