@@ -1,0 +1,20 @@
+trim :Quantity
+trim :Price_Per_Unit
+trim :Total_Spent
+set-type :Total_Spent double 
+set-type :Quantity double 
+set-type :Price_Per_Unit double 
+parse-as-date :Transaction_Date yyyy-MM-dd
+set-column :Discount_Applied (Discount_Applied == null || Discount_Applied == '') ? 'Desconocido' : Discount_Applied
+set-column :Item (Item == null || Item == '') ? 'Item desconocido' : Item
+set-column :Estado_Registro (Item == 'Item desconocido' || Total_Spent == 0.0) ? 'Incompleto' : 'Validado'
+set-column :Price_Per_Unit (Price_Per_Unit == 0.0 && Quantity > 0.0) ? (Total_Spent / Quantity) : Price_Per_Unit
+fill-null-or-empty :Price_Per_Unit '0.0'
+fill-null-or-empty :Quantity '0.0'
+fill-null-or-empty :Total_Spent '0.0'
+set-column :Quantity (Quantity < 1.0 || Quantity > 10.0) ? 0.0 : Quantity
+set-column :Transaction_ID (Transaction_ID.startsWith('TXN_')) ? Transaction_ID : ('INVALID_' + Transaction_ID)
+set-column :Customer_ID (Customer_ID.startsWith('CUST_')) ? Customer_ID : ('INVALID_' + Customer_ID)
+set-column :diff (Total_Spent - (Price_Per_Unit * Quantity))
+set-column :Check_Total (diff != 0) ? 'Error Cálculo' : 'OK'
+drop :diff
